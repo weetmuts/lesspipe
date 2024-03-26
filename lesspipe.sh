@@ -484,7 +484,7 @@ isfinal () {
 		if [[ "$2" == "$sep" && "$x" == html ]]; then
 			colarg="--mono"
 			[[ $COLOR == *always ]] && colarg="--color"
-			has_cmd xmq && msg "xmq output, append :: to the filename to see the original contents" && xmq --html "$1" render-terminal "$colarg" && return
+			has_cmd xmq && msg "xmq output, append :: to the filename to see the original contents" && xmq "$1" render-terminal "$colarg" && return
 		fi
 		cat "$1"
 		return
@@ -502,13 +502,11 @@ isfinal () {
 				fi
 			fi
 			msg="$x: showing the output of ${cmd[*]}" ;;
-		xml)
+		xml|html)
 			colarg="--mono"
 			[[ $COLOR == *always ]] && colarg="--color"
-			{ [[ -z $file2 ]] && has_cmd xmq && cmd=(xmq --xml "$1" render-terminal "$colarg"); } ||
+			{ [[ -z $file2 ]] && has_cmd xmq && cmd=(xmq "$1" render-terminal "$colarg"); } ||
 			{ [[ -z $file2 ]] && has_htmlprog && cmd=(ishtml "$1"); } ;;
-		html)
-			[[ -z $file2 ]] && has_htmlprog && cmd=(ishtml "$1") ;;
 		dtb|dts)
 			has_cmd dtc && cmd=(isdtb "$1") ;;
 		pdf)
